@@ -1,11 +1,10 @@
 const express = require("express");
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 
 app.use(express.json());
-app.use(express.static("public"));
 
-let players = {}; // stores all player profiles
+let players = {};
 
 const buildingTypes = {
   house: { cost: 50, income: 5 },
@@ -28,24 +27,20 @@ function getPlayer(name) {
   return players[name];
 }
 
-// PLAYER DATA
+/* ========= API ROUTES ========= */
+
 app.get("/api/player/:name", (req, res) => {
   res.json(getPlayer(req.params.name));
 });
 
 app.put("/api/player/:name/theme", (req, res) => {
   const player = getPlayer(req.params.name);
+  if (!req.body.theme) return res.status(400).json({ error: "Theme required" });
+
   player.theme = req.body.theme;
   res.json(player);
 });
 
-app.put("/api/player/:name/money", (req, res) => {
-  const player = getPlayer(req.params.name);
-  player.money = req.body.money;
-  res.json(player);
-});
-
-// BUILDINGS
 app.get("/api/player/:name/buildings", (req, res) => {
   res.json(getPlayer(req.params.name).buildings);
 });
@@ -91,5 +86,17 @@ app.put("/api/player/:name/buildings/:id", (req, res) => {
   res.json({ building, money: player.money });
 });
 
-app.listen(PORT, () => console.log("Server running at http://localhost:" + PORT));
+app.delete("/api/player/:name/buildings/:id", (req, res) => {
+  const player = getPlayer(req.params.name);
+  const index = player.buildings.findIndex(b => b.id == req.params.id);
 
+  if (index === -1) return res.status(404).json({ error: "Not found" });
+
+  player.buildings.splice(index, 1);
+  res.json({ message: "Building deleted" });
+});
+
+/* ========= STATIC FILES (LAST) ========= */
+app.use(express.static("public"));
+
+app.listen(PORT, () => console.log("Server running at http://localhost:" + PORT));
