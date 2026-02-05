@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Town Data</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>📊 Building Data</h1>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Type</th>
+      <th>Level</th>
+      <th>X</th>
+      <th>Y</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+</table>
+
+<br>
+<a href="game.html">⬅ Back to Game</a>
+
+<script>
+const playerName = document.cookie.split("; ").find(c=>c.startsWith("playerName="))?.split("=")[1];
+
+fetch(`/api/player/${playerName}/buildings`)
+  .then(res => res.json())
+  .then(data => {
+    const body = document.getElementById("tableBody");
+    data.forEach(b => {
+      body.innerHTML += `
+        <tr>
+          <td>${b.id}</td>
+          <td>${b.type}</td>
+          <td>${b.level}</td>
+          <td>${Math.floor(b.x)}</td>
+          <td>${Math.floor(b.y)}</td>
+        </tr>
+      `;
+    });
+  });
+</script>
+
+</body>
+</html>
