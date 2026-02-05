@@ -44,3 +44,25 @@ button {
 button:active {
   transform: scale(0.9);
 }
+
+#map {
+  position: relative;
+  width: 800px;
+  height: 500px;
+  background: url("images/map.png");
+  background-size: cover;
+  border: 3px solid black;
+  margin: 20px auto;
+}
+
+.building {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.building:hover {
+  transform: scale(1.1);
+}

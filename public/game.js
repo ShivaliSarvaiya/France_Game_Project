@@ -51,8 +51,9 @@ function saveMoney(){
 }
 
 function build(type){
-  const x=Math.random()*740;
-  const y=Math.random()*440;
+  const x = Math.floor(Math.random() * 700);
+const y = Math.floor(Math.random() * 400);
+
 
   fetch(`/api/player/${playerName}/buildings`,{
     method:"POST",
@@ -97,3 +98,18 @@ function upgrade(id){
     loadBuildings();
   });
 }
+
+function drawBuilding(b) {
+  const img = document.createElement("img");
+  img.className = "building";
+  img.style.left = b.x + "px";
+  img.style.top = b.y + "px";
+
+  // choose image based on level
+  img.src = `images/${b.type}${b.level === 2 ? "2" : ""}.png`;
+
+  img.onclick = () => upgradeBuilding(b.id);
+
+  document.getElementById("map").appendChild(img);
+}
+
