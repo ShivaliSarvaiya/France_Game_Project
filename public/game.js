@@ -11,14 +11,6 @@ document.getElementById("welcome").textContent = "Welcome, " + playerName + "!";
 
 let playerData;
 
-fetch(`/api/player/${playerName}`)
-  .then(r=>r.json())
-  .then(data=>{
-    playerData=data;
-    applyTheme();
-    updateMoney();
-    loadBuildings();
-  });
 
 function applyTheme(){
   document.body.classList.toggle("dark", playerData.theme==="dark");
@@ -98,6 +90,11 @@ function upgrade(id){
     loadBuildings();
   });
 }
+
+function updateMoneyDisplay(amount) {
+  document.getElementById("money").textContent = amount;
+}
+
 
 function drawBuilding(b) {
   const img = document.createElement("img");
