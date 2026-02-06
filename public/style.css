@@ -10,16 +10,6 @@ body {
   color: white;
 }
 
-#map {
-  width: 800px;
-  height: 500px;
-  margin: 20px auto;
-  position: relative;
-  background-image: url("images/map.png");
-  background-size: cover;
-  border: 3px solid black;
-}
-
 .building {
   position: absolute;
   width: 60px;
