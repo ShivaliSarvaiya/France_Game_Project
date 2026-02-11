@@ -38,10 +38,6 @@ function toggleTheme(){
   }).then(applyTheme);
 }
 
-function updateMoney(){
-  document.getElementById("money").textContent=playerData.money;
-}
-
 document.getElementById("earnBtn").onclick=()=>{
   playerData.money+=10;
   saveMoney();
@@ -52,7 +48,7 @@ function saveMoney(){
     method:"PUT",
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({money:playerData.money})
-  }).then(updateMoney);
+  }).then(updateMoneyDisplay(playerData.money));
 }
   async function build(type) {
   const x = Math.floor(Math.random() * 700);
@@ -87,7 +83,7 @@ function saveMoney(){
   .then(data=>{
     if(data.error) return alert(data.error);
     playerData.money=data.money;
-    updateMoney();
+    updateMoneyDisplay();
     loadBuildings();
     if(type==="eiffel") alert("🎉 You built the Eiffel Tower! You win!");
   });

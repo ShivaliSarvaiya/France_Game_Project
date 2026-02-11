@@ -29,6 +29,18 @@ function getPlayer(name) {
 
 /* ========= API ROUTES ========= */
 
+app.put("/api/player/:name/money", (req, res) => {
+  const player = getPlayer(req.params.name);
+  const { money } = req.body;
+
+  if (typeof money !== "number") {
+    return res.status(400).json({ error: "Invalid money value" });
+  }
+
+  player.money = money; 
+  res.json({ money: player.money });
+});
+
 app.get("/api/player/:name", (req, res) => {
   res.json(getPlayer(req.params.name));
 });
